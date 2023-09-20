@@ -1,0 +1,133 @@
+{% extends 'index.html' %}
+{% block title %}Analyse{% endblock title %}
+{% block main %}
+<div class="container mt-1">
+    <hr>
+    <h1 class="display-6 text-center">User Details</h1>
+    <hr>
+    <form action="{% url 'LoanAnalysisApp:analyse' %}" method="POST">
+        {% csrf_token %}
+        <table class="table">
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" class="form-control" id="fname" name="fname" required></td>
+                <td>Last Name</td>
+                <td><input type="text" class="form-control" id="lname" name="lname" required></td>
+            </tr>
+            <tr>
+                <td>Phone Number</td>
+                <td><input type="text" class="form-control" id="phonenumber" name="phonenumber" required></td>
+                <td>Email</td>
+                <td><input type="email" class="form-control" id="email" name="email" required></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <select class="form-control" id="gender" name="gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </td>
+                <td>Education</td>
+                <td>
+                    <select class="form-control" id="education" name="education" required>
+                        <option value="Graduate">Graduate</option>
+                        <option value="Post-Graduate">Post-Graduate</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Married</td>
+                <td>
+                    <div class="form-check">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="married" id="married_yes" value="True"
+                                required>
+                            <label class="form-check-label" for="married_yes">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="married" id="married_no" value="False"
+                                required>
+                            <label class="form-check-label" for="married_no">No</label>
+                        </div>
+                    </div>
+                </td>
+                <td>Number of Dependents</td>
+                <td>
+                    <select class="form-control" id="dependents" name="dependents" required>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3 or 3+</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Self Employed</td>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="selfemployed" id="self_employed_yes"
+                            value="True" required>
+                        <label class="form-check-label" for="self_employed_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="selfemployed" id="self_employed_no"
+                            value="False" required>
+                        <label class="form-check-label" for="self_employed_no">No</label>
+                    </div>
+                </td>
+                <td>Annual Income</td>
+                <td><input type="text" class="form-control" id="annaulincome" name="annualincome" required></td>
+            </tr>
+            <tr>
+                <td>Property Area</td>
+                <td>
+                    <select class="form-control" id="propertyarea" name="propertyarea" required>
+                        <option value="Urban">Urban</option>
+                        <option value="Semi-Urban">Semi-Urban</option>
+                        <option value="Rural">Rural</option>
+                    </select>
+                </td>
+                <td>Credit History</td>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="credithistory" id="credit_history_yes"
+                            value="True" required>
+                        <label class="form-check-label" for="credit_history_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="credithistory" id="credit_history_no"
+                            value="False" required>
+                        <label class="form-check-label" for="credit_history_no">No</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Loan Amount</td>
+                <td><input type="text" class="form-control" id="loanamount" name="loanamount" required></td>
+                <td>Loan Amount Term (In months)</td>
+                <td><input type="number" class="form-control" id="term" name="term" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Interest Rate</td>
+                <td><input type="number" class="form-control" id="interest" name="interest" required></td>
+                <td>Co-Applicant Annual Income</td>
+                <td><input type="number" class="form-control" id="coapplicantincome" name="coapplicantincome" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Downpayment</td>
+                <td><input type="number" class="form-control" id="downpayment" name="downpayment" required></td>
+                <td>Savings Balance</td>
+                <td><input type="number" class="form-control" id="savingsbalance" name="savingsbalance" required>
+                </td>
+            </tr>
+        </table>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary" type="submit">Analyse</button>
+        </div>
+        <hr>
+    </form>
+</div>
+{% endblock main %}

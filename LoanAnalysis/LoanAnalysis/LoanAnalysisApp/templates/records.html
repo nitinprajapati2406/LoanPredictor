@@ -1,0 +1,69 @@
+{% extends 'index.html' %}
+{% block title %}Records{% endblock title %}
+{% block main %}
+<form class="form-group p-2" action="{% url 'LoanAnalysisApp:record' %}" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Enter email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
+    </div>
+    <input type="submit" name="submit" class="btn btn-primary" value="Search">
+</form>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="container mt-5">
+    <h1 class="text-center mb-3">Loan Dashboard</h1>
+    <h5 class="text-center" id="status"></h5>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Chart for Savings and Down Payment -->
+            <canvas id="savingsDownPaymentChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <!-- Chart for Monthly Income and EMI -->
+            <canvas id="incomeEMIChart"></canvas>
+        </div>
+    </div>
+</div>
+<script>
+    // Check if JSON data is available 
+
+var data = JSON.parse("{{ data|escapejs }}");
+document.getElementById("status").innerHTML = 'Predicted Loan Status: ' + data.prediction;
+    // Function to draw a donut chart with a hole in the center
+    function drawDonutChart(chartId, data, labels, colors) {
+        var ctx = document.getElementById(chartId).getContext('2d');
+        return new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: colors,
+                    borderColor: 'rgba(255, 255, 255, 1)', // White border for the hole
+                    borderWidth: 10, // Adjust the width of the hole
+                }]
+            },
+            options: {
+                cutoutPercentage: 50, // Adjust the size of the hole (50% for a classic donut)
+                responsive: true,
+                maintainAspectRatio: false, // Ensure chart size is fixed
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                }
+            }
+        });
+    }
+    // Data for Savings and Down Payment Donut Chart
+    var savingsDownPaymentData = [data.savings, data.downpayment];
+    var savingsDownPaymentLabels = ["Savings", "Down Payment"];
+    var savingsDownPaymentColors = ["#FF5733", "#33FF57"];
+    // Data for Monthly Income and EMI Donut Chart
+    var incomeEMIData = [data.income, data.emi];
+    var incomeEMILabels = ["Monthly Income", "EMI"];
+    var incomeEMIColors = ["#5733FF", "#FF5733"];
+    // Initialize and render Donut Charts
+    drawDonutChart('savingsDownPaymentChart', savingsDownPaymentData, savingsDownPaymentLabels, savingsDownPaymentColors);
+    drawDonutChart('incomeEMIChart', incomeEMIData, incomeEMILabels, incomeEMIColors);
+</script>
+{% endblock main %}
